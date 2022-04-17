@@ -87,8 +87,16 @@ const findShortestPath = (
   let parent = parents[endNode];
   while (parent) {
     shortestPath.push(parent);
-    parent = parents[parent];
+    // Add a condition to break the loop
+    // if parent === startNode, it means the shortestPath contains all the shortestPath nodes
+    // else continue the loop by pushing the nodes
+    if (parent === startNode) {
+      parent = null;
+    } else {
+      parent = parents[parent];
+    }
   }
+
   shortestPath.reverse();
 
   //this is the shortest path
