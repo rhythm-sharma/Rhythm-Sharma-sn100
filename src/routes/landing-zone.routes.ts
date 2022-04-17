@@ -44,18 +44,19 @@ router.get(
 
 // Function to update
 export const isValidLandingZone = ({ R1: arr1, R2: arr2 }: ICoordinates) => {
-  const valid: boolean[] = [];
-  for (let i = 0; i < arr2.length; i++) {
-    for (let j = 0; j < arr1.length; j++) {
-      if (arr2[i] === arr1[j]) {
-        valid.push(true);
-      }
+  // Added a hashMap method for performance improvement to validate if arr2 items includes in arr1
+  const hashMapSet = new Set();
+  for (let i = 0; i < arr1.length; i++) {
+    if (!hashMapSet.has(arr1[i])) {
+      hashMapSet.add(arr1[i]);
     }
   }
-  if (valid.length === arr2.length) {
-    return true;
+  for (let i = 0; i < arr2.length; i++) {
+    if (!hashMapSet.has(arr2[i])) {
+      return false;
+    }
   }
-  return false;
+  return true;
 };
 
 export default router;
